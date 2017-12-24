@@ -1,7 +1,22 @@
-// new year theme
-$classic-base-color: #fae451;         // Midnight Express
-$classic-primary-color: #ffffff;      // White
-$classic-secondary-color: #afff78;    // Pattens Blue
-$classic-highlight-color: #ff8869;    // Summer Sky
+// new year theme(Xmas Theme?)
+
+// Color Values
+$color-green: #afff78;  // Green
+$color-white: #ffffff;  // White
+$color-gold: #fae451;   // Gold
+$color-red: #ff8869;    // Red
+
+// Values from the classic Mastodon UI
+$classic-base-color: $color-green;         // Green
+$classic-primary-color: #color-white;      // White
+$classic-secondary-color: #color-gold;    // Gold
+$classic-highlight-color: #color-red;    // Red
+
+// Tell UI to use selected colors
+$ui-base-color: $classic-base-color !default;                  // Darkest
+$ui-base-lighter-color: lighten($ui-base-color, 26%) !default; // Lighter darkest
+$ui-primary-color: $classic-primary-color !default;            // Lighter
+$ui-secondary-color: $classic-secondary-color !default;        // Lightest
+$ui-highlight-color: $classic-highlight-color !default;        // Vibrant
 
 @import 'application';
