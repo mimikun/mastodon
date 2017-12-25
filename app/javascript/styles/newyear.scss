@@ -8,9 +8,9 @@ $color-red: #ff8869;    // Red
 
 // Values from the classic Mastodon UI
 $classic-base-color: $color-green;         // Green
-$classic-primary-color: #color-white;      // White
-$classic-secondary-color: #color-gold;    // Gold
-$classic-highlight-color: #color-red;    // Red
+$classic-primary-color: $color-white;      // White
+$classic-secondary-color: $color-gold;    // Gold
+$classic-highlight-color: $color-red;    // Red
 
 // Tell UI to use selected colors
 $ui-base-color: $classic-base-color !default;                  // Darkest
