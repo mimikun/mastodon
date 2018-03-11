@@ -15,18 +15,18 @@ class FetchLinkCardService < BaseService
     @status = status
     @url    = parse_urls
 
-    return if @url.nil? || @status.preview_cards.any?
+    return if @url.nil? #|| @status.preview_cards.any?
 
     @url = @url.to_s
 
     RedisLock.acquire(lock_options) do |lock|
       if lock.acquired?
         @card = PreviewCard.find_by(url: @url)
-        process_url if @card.nil? || @card.updated_at <= 2.weeks.ago
+        process_url # if @card.nil? || @card.updated_at <= 2.weeks.ago
       end
     end
 
-    attach_card if @card&.persisted?
+    attach_card if @card&.persisted? && @status.preview_cards.empty?
   rescue HTTP::Error, Addressable::URI::InvalidURIError => e
     Rails.logger.debug "Error fetching link #{@url}: #{e}"
     nil
