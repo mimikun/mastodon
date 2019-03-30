@@ -9,6 +9,7 @@ import {
   selectComposeSuggestion,
   changeComposeSpoilerText,
   insertEmojiCompose,
+  updateTagTemplate,
 } from '../../../actions/compose';
 
 import {
@@ -32,6 +33,7 @@ const mapStateToProps = state => ({
   is_uploading: state.getIn(['compose', 'is_uploading']),
   showSearch: state.getIn(['search', 'submitted']) && !state.getIn(['search', 'hidden']),
   anyMedia: state.getIn(['compose', 'media_attachments']).size > 0,
+  tagTemplate : state.getIn(['compose', 'tagTemplate'], ''),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -78,6 +80,10 @@ const mapDispatchToProps = (dispatch) => ({
 
   onKancolleSubmit (textarea) {
     dispatch(submitKancolle(textarea));
+  },
+
+  onChangeTagTemplate (tag) {
+    dispatch(updateTagTemplate(tag));
   },
 });
 
