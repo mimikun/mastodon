@@ -85,7 +85,7 @@ gem 'stoplight', '~> 2.1.3'
 gem 'strong_migrations', '~> 0.4'
 gem 'tty-command', '~> 0.8', require: false
 gem 'tty-prompt', '~> 0.19', require: false
-gem 'twitter-text', '~> 1.14'
+gem 'twitter-text', '~> 3.0'
 gem 'tzinfo-data', '~> 1.2019'
 gem 'webpacker', '~> 4.0'
 gem 'webpush'
