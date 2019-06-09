@@ -139,6 +139,12 @@ class ComposeForm extends ImmutablePureComponent {
     this.props.onChangeSpoilerText(e.target.value);
   }
 
+  handleFocus = () => {
+    if (this.composeForm) {
+      this.composeForm.scrollIntoView();
+    }
+  }
+
   componentDidUpdate (prevProps) {
     // This statement does several things:
     // - If we're beginning a reply, and,
@@ -180,6 +186,10 @@ class ComposeForm extends ImmutablePureComponent {
     this.spoilerText = c;
   }
 
+  setRef = c => {
+    this.composeForm = c;
+  };
+
   handleEmojiPick = (data) => {
     const { text }     = this.props;
     const position     = this.autosuggestTextarea.textarea.selectionStart;
@@ -211,7 +221,7 @@ class ComposeForm extends ImmutablePureComponent {
     }
 
     return (
-      <div className='compose-form'>
+      <div className='compose-form' ref={this.setRef}>
         <WarningContainer />
 
         <ReplyIndicatorContainer />
@@ -234,35 +244,36 @@ class ComposeForm extends ImmutablePureComponent {
           />
         </div>
 
-        <div className='compose-form__autosuggest-wrapper'>
-          <AutosuggestTextarea
-            ref={this.setAutosuggestTextarea}
-            placeholder={intl.formatMessage(messages.placeholder)}
-            disabled={disabled}
-            value={this.props.text}
-            onChange={this.handleChange}
-            suggestions={tagSuggestionFrom === 'autosuggested-textarea' ? this.props.suggestions : Immutable.List()}
-            onKeyDown={this.handleKeyDown}
-            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-            onSuggestionSelected={this.onSuggestionSelected}
-            onPaste={onPaste}
-            autoFocus={!showSearch && !isMobile(window.innerWidth)}
-          />
-
+        <div className={`emoji-picker-wrapper ${this.props.showSearch ? 'emoji-picker-wrapper--hidden' : ''}`}>
           <EmojiPickerDropdown onPickEmoji={this.handleEmojiPick} />
         </div>
 
-        <div className='compose-form__modifiers'>
-          <UploadFormContainer />
-          <PollFormContainer />
-          <HashtagTempContainer
-            onSuggestionsFetchRequested={this.onHashTagSuggestionsFetchRequested}
-            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-            suggestions={this.props.suggestions}
-            tagSuggestionFrom={tagSuggestionFrom}
-          />
-        </div>
+        <AutosuggestTextarea
+          ref={this.setAutosuggestTextarea}
+          placeholder={intl.formatMessage(messages.placeholder)}
+          disabled={disabled}
+          value={this.props.text}
+          onChange={this.handleChange}
+          suggestions={this.props.suggestions}
+          onFocus={this.handleFocus}
+          onKeyDown={this.handleKeyDown}
+          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+          onSuggestionSelected={this.onSuggestionSelected}
+          onPaste={onPaste}
+          autoFocus={!showSearch && !isMobile(window.innerWidth)}
+        >
+          <div className='compose-form__modifiers'>
+            <UploadFormContainer />
+            <PollFormContainer />
+            <HashtagTempContainer
+              onSuggestionsFetchRequested={this.onHashTagSuggestionsFetchRequested}
+              onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+              suggestions={this.props.suggestions}
+              tagSuggestionFrom={tagSuggestionFrom}
+            />
+          </div>
+        </AutosuggestTextarea>
 
         <div className='compose-form__buttons-wrapper'>
           <div className='compose-form__buttons'>

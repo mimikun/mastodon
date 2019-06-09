@@ -83,8 +83,8 @@ const initialPoll = ImmutableMap({
 const initialTagTemp = ImmutableList([
   ImmutableMap({
     text: '',
-    active: false
-  })
+    active: false,
+  }),
 ]);
 
 function getTagTemplate() {
@@ -357,6 +357,7 @@ export default function compose(state = initialState, action) {
       map.set('caretPosition', null);
       map.set('idempotencyKey', uuid());
       map.set('tagTemplate', getTagTemplate());
+      map.set('sensitive', action.status.get('sensitive'));
 
       if (action.status.get('spoiler_text').length > 0) {
         map.set('spoiler', true);
