@@ -624,30 +624,11 @@
     display: flex;
     justify-content: flex-end;
     min-width: 0;
-    // padding-top: 10px;
     flex: 0 0 auto;
 
     .compose-form__publish-button-wrapper {
       overflow: hidden;
-
-      button {
-        display: inline-block;
-        width: auto;
-
-        margin-right: 0.5em;
-      }
-
-      button:last-child {
-        margin-right: auto;
-      }
-    }
-  }
-
-  .compose-form__utilBtns {
-    padding-top: 10px;
-
-    * {
-        margin-bottom: 1em;
+      padding-top: 10px;
     }
   }
 }
