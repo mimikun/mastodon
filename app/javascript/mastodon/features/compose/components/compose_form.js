@@ -279,7 +279,7 @@ class ComposeForm extends ImmutablePureComponent {
         </div>
 
         <div className='compose-form__utilBtns'>
-          <Button className='compose-form__utilBtns-fukumoku' text={intl.formatMessage(messages.utilBtns_fukumoku)} onClick={this.handleOnFukumokuSubmit} block />
+          <Button className='compose_form__utilBtns-fukumoku' text={intl.formatMessage(messages.utilBtns_fukumoku)} onClick={this.handleOnFukumokuSubmit} block />
         </div>
       </div>
     );
