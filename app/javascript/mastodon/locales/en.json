@@ -84,8 +84,6 @@
   "compose_form.spoiler.unmarked": "Text is not hidden",
   "compose_form.spoiler_placeholder": "Write your warning here",
   "compose_form.utilBtns_fukumoku": "Fukumoku HashTag",
-  "compose_form.utilBtns_warshipgirls": "WarShipGirls HashTag",
-  "compose_form.utilBtns_kancolle": "KanColle HashTag",
   "confirmation_modal.cancel": "Cancel",
   "confirmations.block.block_and_report": "Block & Report",
   "confirmations.block.confirm": "Block",

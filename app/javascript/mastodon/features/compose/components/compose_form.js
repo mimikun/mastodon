@@ -36,8 +36,6 @@ const messages = defineMessages({
   publishLoud: { id: 'compose_form.publish_loud', defaultMessage: '{publish}!' },
 
   utilBtns_fukumoku: { id: 'compose_form.utilBtns_fukumoku', defaultMessage: 'Fukumoku HashTag' },
-  utilBtns_warshipgirls: { id: 'compose_form.utilBtns_warshipgirls', defaultMessage: 'WarShipGirls HashTag' },
-  utilBtns_kancolle: { id: 'compose_form.utilBtns_kancolle', defaultMessage: 'KanColle HashTag' },
 });
 
 export default @injectIntl
@@ -72,11 +70,8 @@ class ComposeForm extends ImmutablePureComponent {
     anyMedia: PropTypes.bool,
     singleColumn: PropTypes.bool,
 
-    onFukumokuSubmit: PropTypes.func.isRequired,
-    onWarshipgirlsSubmit: PropTypes.func.isRequired,
-    onKancolleSubmit: PropTypes.func.isRequired,
-
     tagTemplate: ImmutablePropTypes.list,
+    onFukumokuSubmit: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -201,10 +196,6 @@ class ComposeForm extends ImmutablePureComponent {
 
   handleOnFukumokuSubmit = () => this.props.onFukumokuSubmit(this.autosuggestTextarea.textarea)
 
-  handleOnWarshipgirlsSubmit = () => this.props.onWarshipgirlsSubmit(this.autosuggestTextarea.textarea)
-
-  handleOnKancolleSubmit = () => this.props.onKancolleSubmit(this.autosuggestTextarea.textarea)
-
   render () {
     const { intl, onPaste, showSearch, anyMedia, tagTemplate } = this.props;
     const { tagSuggestionFrom } = this.state;
@@ -289,8 +280,6 @@ class ComposeForm extends ImmutablePureComponent {
 
         <div className='compose-form__utilBtns'>
           <Button className='compose-form__utilBtns-fukumoku' text={intl.formatMessage(messages.utilBtns_fukumoku)} onClick={this.handleOnFukumokuSubmit} block />
-          <Button className='compose-form__utilBtns-Warshipgirls' text={intl.formatMessage(messages.utilBtns_warshipgirls)} onClick={this.handleOnWarshipgirlsSubmit} block />
-          <Button className='compose-form__utilBtns-kancolle' text={intl.formatMessage(messages.utilBtns_kancolle)} onClick={this.handleOnKancolleSubmit} block />
         </div>
       </div>
     );

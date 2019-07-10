@@ -14,8 +14,6 @@ import {
 
 import {
   submitFukumoku,
-  submitWarshipgirls,
-  submitKancolle,
 } from '../../../actions/UtilBtns';
 
 const mapStateToProps = state => ({
@@ -73,13 +71,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(submitFukumoku(textarea));
   },
 
-  onWarshipgirlsSubmit (textarea) {
-    dispatch(submitWarshipgirls(textarea));
-  },
-
-  onKancolleSubmit (textarea) {
-    dispatch(submitKancolle(textarea));
-  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ComposeForm);
