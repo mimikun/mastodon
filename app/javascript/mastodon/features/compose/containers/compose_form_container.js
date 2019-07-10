@@ -12,10 +12,6 @@ import {
   uploadCompose,
 } from '../../../actions/compose';
 
-import {
-  submitFukumoku,
-} from '../../../actions/UtilBtns';
-
 const mapStateToProps = state => ({
   text: state.getIn(['compose', 'text']),
   suggestions: state.getIn(['compose', 'suggestions']),
@@ -65,10 +61,6 @@ const mapDispatchToProps = (dispatch) => ({
 
   onPickEmoji (position, data, needsSpace) {
     dispatch(insertEmojiCompose(position, data, needsSpace));
-  },
-
-  onFukumokuSubmit (textarea) {
-    dispatch(submitFukumoku(textarea));
   },
 
 });

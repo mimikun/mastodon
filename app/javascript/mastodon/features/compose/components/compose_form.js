@@ -34,8 +34,6 @@ const messages = defineMessages({
   hashtag_temp_placeholder: { id: 'compose_form.hashtag_temp_placeholder', defaultMessage: 'Append tag' },
   publish: { id: 'compose_form.publish', defaultMessage: 'Toot' },
   publishLoud: { id: 'compose_form.publish_loud', defaultMessage: '{publish}!' },
-
-  utilBtns_fukumoku: { id: 'compose_form.utilBtns_fukumoku', defaultMessage: 'Fukumoku HashTag' },
 });
 
 export default @injectIntl
@@ -69,9 +67,7 @@ class ComposeForm extends ImmutablePureComponent {
     showSearch: PropTypes.bool,
     anyMedia: PropTypes.bool,
     singleColumn: PropTypes.bool,
-
     tagTemplate: ImmutablePropTypes.list,
-    onFukumokuSubmit: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -194,8 +190,6 @@ class ComposeForm extends ImmutablePureComponent {
     this.props.onPickEmoji(position, data, needsSpace);
   }
 
-  handleOnFukumokuSubmit = () => this.props.onFukumokuSubmit(this.autosuggestTextarea.textarea)
-
   render () {
     const { intl, onPaste, showSearch, anyMedia, tagTemplate } = this.props;
     const { tagSuggestionFrom } = this.state;
@@ -276,10 +270,6 @@ class ComposeForm extends ImmutablePureComponent {
 
         <div className='compose-form__publish'>
           <div className='compose-form__publish-button-wrapper'><Button text={publishText} onClick={this.handleSubmit} disabled={disabledButton} block /></div>
-        </div>
-
-        <div className='compose_form__utilBtns'>
-          <Button className='compose_form__utilBtns-fukumoku' text={intl.formatMessage(messages.utilBtns_fukumoku)} onClick={this.handleOnFukumokuSubmit} block />
         </div>
       </div>
     );
