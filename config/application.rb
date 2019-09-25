@@ -13,7 +13,8 @@ require_relative '../lib/paperclip/video_transcoder'
 require_relative '../lib/paperclip/type_corrector'
 require_relative '../lib/mastodon/snowflake'
 require_relative '../lib/mastodon/version'
-require_relative '../lib/devise/ldap_authenticatable'
+require_relative '../lib/devise/two_factor_ldap_authenticatable'
+require_relative '../lib/devise/two_factor_pam_authenticatable'
 
 Dotenv::Railtie.load
 
@@ -76,7 +77,7 @@ module Mastodon
       :no,
       :oc,
       :pl,
-      :pt,
+      :'pt-PT',
       :'pt-BR',
       :ro,
       :ru,
@@ -114,6 +115,9 @@ module Mastodon
       Doorkeeper::AuthorizationsController.layout 'modal'
       Doorkeeper::AuthorizedApplicationsController.layout 'admin'
       Doorkeeper::Application.send :include, ApplicationExtension
+      Devise::FailureApp.send :include, AbstractController::Callbacks
+      Devise::FailureApp.send :include, HttpAcceptLanguage::EasyAccess
+      Devise::FailureApp.send :include, Localized
     end
   end
 end
