@@ -131,7 +131,7 @@ end
 
 group :development do
   gem 'active_record_query_trace', '~> 1.7'
-  gem 'annotate', '~> 3.0'
+  gem 'annotate', '~> 3.1'
   gem 'better_errors', '~> 2.6'
   gem 'binding_of_caller', '~> 0.7'
   gem 'bullet', '~> 6.1'
@@ -139,11 +139,11 @@ group :development do
   gem 'letter_opener_web', '~> 1.4'
   gem 'memory_profiler'
   gem 'rubocop', '~> 0.79', require: false
-  gem 'rubocop-rails', '~> 2.4', require: false
+  gem 'rubocop-rails', '~> 2.5', require: false
   gem 'brakeman', '~> 4.8', require: false
   gem 'bundler-audit', '~> 0.6', require: false
 
-  gem 'capistrano', '~> 3.12'
+  gem 'capistrano', '~> 3.13'
   gem 'capistrano-rails', '~> 1.4'
   gem 'capistrano-rbenv', '~> 2.1'
   gem 'capistrano-yarn', '~> 2.0'
