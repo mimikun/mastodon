@@ -3,19 +3,16 @@ import CharacterCounter from './character_counter';
 import Button from '../../../components/button';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
-import Immutable from 'immutable';
 import ReplyIndicatorContainer from '../containers/reply_indicator_container';
 import AutosuggestTextarea from '../../../components/autosuggest_textarea';
 import AutosuggestInput from '../../../components/autosuggest_input';
 import PollButtonContainer from '../containers/poll_button_container';
-import HashtagTemp from '../../../components/hashtag_temp';
 import UploadButtonContainer from '../containers/upload_button_container';
 import { defineMessages, injectIntl } from 'react-intl';
 import SpoilerButtonContainer from '../containers/spoiler_button_container';
 import PrivacyDropdownContainer from '../containers/privacy_dropdown_container';
 import EmojiPickerDropdown from '../containers/emoji_picker_dropdown_container';
 import PollFormContainer from '../containers/poll_form_container';
-import HashtagTempContainer from '../containers/hashtag_temp_container';
 import UploadFormContainer from '../containers/upload_form_container';
 import WarningContainer from '../containers/warning_container';
 import { isMobile } from '../../../is_mobile';
@@ -31,7 +28,6 @@ const MAX_TOOT_CHAR = 5000
 const messages = defineMessages({
   placeholder: { id: 'compose_form.placeholder', defaultMessage: 'What is on your mind?' },
   spoiler_placeholder: { id: 'compose_form.spoiler_placeholder', defaultMessage: 'Write your warning here' },
-  hashtag_temp_placeholder: { id: 'compose_form.hashtag_temp_placeholder', defaultMessage: 'Append tag' },
   publish: { id: 'compose_form.publish', defaultMessage: 'Toot' },
   publishLoud: { id: 'compose_form.publish_loud', defaultMessage: '{publish}!' },
 });
@@ -67,7 +63,6 @@ class ComposeForm extends ImmutablePureComponent {
     showSearch: PropTypes.bool,
     anyMedia: PropTypes.bool,
     singleColumn: PropTypes.bool,
-    tagTemplate: ImmutablePropTypes.list,
   };
 
   static defaultProps = {
@@ -78,12 +73,22 @@ class ComposeForm extends ImmutablePureComponent {
     this.props.onChange(e.target.value);
   }
 
-  state = { tagSuggestionFrom: null }
-
   handleKeyDown = (e) => {
     if (e.keyCode === 13 && (e.ctrlKey || e.metaKey)) {
       this.handleSubmit();
     }
+  }
+
+  getFulltextForCharacterCounting = () => {
+    return [this.props.spoiler? this.props.spoilerText: '', countableText(this.props.text)].join('');
+  }
+
+  canSubmit = () => {
+    const { isSubmitting, isChangingUpload, isUploading, anyMedia } = this.props;
+    const fulltext = this.getFulltextForCharacterCounting();
+    const isOnlyWhitespace = fulltext.length !== 0 && fulltext.trim().length === 0;
+
+    return !(isSubmitting || isUploading || isChangingUpload || length(fulltext) > 500 || (isOnlyWhitespace && !anyMedia));
   }
 
   handleSubmit = () => {
@@ -93,11 +98,7 @@ class ComposeForm extends ImmutablePureComponent {
       this.props.onChange(this.autosuggestTextarea.textarea.value);
     }
 
-    // Submit disabled:
-    const { isSubmitting, isChangingUpload, isUploading, anyMedia } = this.props;
-    const fulltext = [this.props.spoilerText, countableText(this.props.text)].join('');
-
-    if (isSubmitting || isUploading || isChangingUpload  || length(fulltext) > MAX_TOOT_CHAR || (fulltext.length !== 0 && fulltext.trim().length === 0 && !anyMedia)) {
+    if (!this.canSubmit()) {
       return;
     }
 
@@ -106,11 +107,9 @@ class ComposeForm extends ImmutablePureComponent {
 
   onSuggestionsClearRequested = () => {
     this.props.onClearSuggestions();
-    this.setState({ tagSuggestionFrom: null });
   }
 
   onSuggestionsFetchRequested = (token) => {
-    this.setState({ tagSuggestionFrom: 'autosuggested-textarea' });
     this.props.onFetchSuggestions(token);
   }
 
@@ -120,11 +119,6 @@ class ComposeForm extends ImmutablePureComponent {
 
   onSpoilerSuggestionSelected = (tokenStart, token, value) => {
     this.props.onSuggestionSelected(tokenStart, token, value, ['spoiler_text']);
-  }
-
-  onHashTagSuggestionsFetchRequested = (token, index) => {
-    this.setState({ tagSuggestionFrom: 'hashtag-temp-' + index.toString() });
-    this.props.onFetchSuggestions(`#${token}`);
   }
 
   handleChangeSpoilerText = (e) => {
@@ -194,13 +188,8 @@ class ComposeForm extends ImmutablePureComponent {
   }
 
   render () {
-    const { intl, onPaste, showSearch, anyMedia, tagTemplate } = this.props;
-    const { tagSuggestionFrom } = this.state;
-    const disabled = this.props.is_submitting;
-    const activeTag = tagTemplate.map(tag => tag && tag.get('active') ? tag.get('text') || '' : '');
-    const preTag = activeTag.map(tag => tag.length > 0 ? ' #' : '');
-    const text     = [this.props.spoiler_text, countableText(this.props.text), preTag.join(''), activeTag.join('')].join('');
-    const disabledButton = disabled || this.props.is_uploading || this.props.is_changing_upload || length(text) > 5000 || (text.length !== 0 && text.trim().length === 0 && !anyMedia);
+    const { intl, onPaste, showSearch } = this.props;
+    const disabled = this.props.isSubmitting;
     let publishText = '';
 
     if (this.props.privacy === 'private' || this.props.privacy === 'direct') {
@@ -252,12 +241,6 @@ class ComposeForm extends ImmutablePureComponent {
           <div className='compose-form__modifiers'>
             <UploadFormContainer />
             <PollFormContainer />
-            <HashtagTempContainer
-              onSuggestionsFetchRequested={this.onHashTagSuggestionsFetchRequested}
-              onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-              suggestions={this.props.suggestions}
-              tagSuggestionFrom={tagSuggestionFrom}
-            />
           </div>
         </AutosuggestTextarea>
 
@@ -268,11 +251,11 @@ class ComposeForm extends ImmutablePureComponent {
             <PrivacyDropdownContainer />
             <SpoilerButtonContainer />
           </div>
-          <div className='character-counter__wrapper'><CharacterCounter max={MAX_TOOT_CHAR} text={text} /></div>
+          <div className='character-counter__wrapper'><CharacterCounter max={MAX_TOOT_CHAR} text={this.getFulltextForCharacterCounting()} /></div>
         </div>
 
         <div className='compose-form__publish'>
-          <div className='compose-form__publish-button-wrapper'><Button text={publishText} onClick={this.handleSubmit} disabled={disabledButton} block /></div>
+          <div className='compose-form__publish-button-wrapper'><Button text={publishText} onClick={this.handleSubmit} disabled={!this.canSubmit()} block /></div>
         </div>
       </div>
     );

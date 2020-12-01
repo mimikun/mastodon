@@ -57,7 +57,11 @@ const makeMapStateToProps = () => {
 
   const mapStateToProps = (state, props) => ({
     status: getStatus(state, props),
-    usingPiP: state.get('picture_in_picture').statusId === props.id,
+
+    pictureInPicture: {
+      inUse: state.getIn(['meta', 'layout']) !== 'mobile' && state.get('picture_in_picture').statusId === props.id,
+      available: state.getIn(['meta', 'layout']) !== 'mobile',
+    },
   });
 
   return mapStateToProps;
@@ -148,12 +152,12 @@ const mapDispatchToProps = (dispatch, { intl }) => ({
     dispatch(mentionCompose(account, router));
   },
 
-  onOpenMedia (media, index) {
-    dispatch(openModal('MEDIA', { media, index }));
+  onOpenMedia (statusId, media, index) {
+    dispatch(openModal('MEDIA', { statusId, media, index }));
   },
 
-  onOpenVideo (media, options) {
-    dispatch(openModal('VIDEO', { media, options }));
+  onOpenVideo (statusId, media, options) {
+    dispatch(openModal('VIDEO', { statusId, media, options }));
   },
 
   onBlock (status) {

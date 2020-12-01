@@ -29,7 +29,7 @@ eo:
         phrase: Estos provita senzorge pri la uskleco de teksto aŭ averto pri enhavo de mesaĝo
         scopes: Kiujn API-ojn la aplikaĵo permesiĝos atingi. Se vi elektas supran amplekson, vi ne bezonas elekti la individuajn.
         setting_aggregate_reblogs: Ne montri novajn diskonigojn de mesaĝoj laste diskonigitaj (nur efikas al novaj diskonigoj)
-        setting_default_sensitive: Sentema komunikilo estas kaŝita defaŭlte kaj povas esti rivelita per alklako
+        setting_default_sensitive: Tiklaj aŭdovidaĵoj estas defaŭlte kaŝita kaj povas esti malkiŝita per klako
         setting_display_media_default: Kaŝi aŭdovidaĵojn markitajn kiel tiklaj
         setting_display_media_hide_all: Ĉiam kaŝi ĉiujn aŭdovidaĵojn
         setting_display_media_show_all: Ĉiam montri aŭdovidaĵojn markitajn kiel tiklaj
@@ -64,7 +64,7 @@ eo:
         text: Antaŭagordita teksto
         title: Titolo
       admin_account_action:
-        send_email_notification: Atentigi la uzanton retpoŝte
+        send_email_notification: Sciigi la uzanton retpoŝte
         text: Propra averto
         type: Ago
         types:
@@ -130,6 +130,7 @@ eo:
         setting_use_blurhash: Montri buntajn transirojn por kaŝitaj aŭdovidaĵoj
         setting_use_pending_items: Malrapida reĝimo
         severity: Graveco
+        sign_in_token_attempt: Sekureca kodo
         type: Importa tipo
         username: Uzantnomo
         username_or_email: Uzantnomo aŭ Retadreso
@@ -153,11 +154,11 @@ eo:
         pending_account: Sendi retmesaĝon kiam nova konto bezonas kontrolon
         reblog: Sendi retmesaĝon kiam iu diskonigas vian mesaĝon
         report: Nova signalo estas sendita
-        trending_tag: Sendi retpoŝtmesaĝon kiam nekontrolita kradvorto furoras
+        trending_tag: Nekontrolita kradvorto furoras
       tag:
         name: Kradvorto
         trendable: Permesi al ĉi tiu kradvorto aperi en furoraĵoj
-        usable: Permesi tootojn uzi ĉiun tiun haketon
+        usable: Permesi mesaĝojn uzi ĉi tiun kradvorton
     'no': Ne
     recommended: Rekomendita
     required:

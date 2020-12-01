@@ -104,6 +104,7 @@ oc:
       confirm: Confirmar
       confirmed: Confirmat
       confirming: Confirmacion
+      delete: Suprimir donadas
       deleted: Suprimits
       demote: Retrogradar
       disable: Desactivar
@@ -170,6 +171,8 @@ oc:
         user: Uitlizaire
       search: Cercar
       search_same_ip: Autres utilizaires amb la meteissa IP
+      sensitive: Sensible
+      sensitized: marcar coma sensible
       shared_inbox_url: URL de recepcion partejada
       show:
         created_reports: Senhalaments creats
@@ -182,6 +185,7 @@ oc:
       time_in_queue: En espèra a la fila %{time}
       title: Comptes
       unconfirmed_email: Adreça pas confirmada
+      undo_sensitized: Desmarcar coma sensible
       undo_silenced: Levar lo silenci
       undo_suspension: Levar la suspension
       unsubscribe: Se desabonar
@@ -197,6 +201,7 @@ oc:
         create_account_warning: Crear un avertiment
         create_announcement: Crear una anóncia
         create_custom_emoji: Crear un emoji personalizat
+        create_ip_block: Crear una règla IP
         demote_user: Retrogradar l’utilizaire
         destroy_announcement: Suprimir l’anóncia
         destroy_custom_emoji: Suprimir l’emoji personalizat
@@ -417,6 +422,19 @@ oc:
         expired: Expirats
         title: Filtre
       title: Convits
+    ip_blocks:
+      add_new: Crear una règla
+      delete: Suprimir
+      expires_in:
+        '1209600': 2 setmanas
+        '15778476': 6 meses
+        '2629746': 1 mes
+        '31556952': 1 an
+        '86400': 1 jorn
+        '94670856': 3 ans
+      new:
+        title: Crear una règlas IP novèla
+      title: Règlas IP
     pending_accounts:
       title: Comptes en espèra (%{count})
     relationships:
@@ -672,6 +690,7 @@ oc:
       account_status: Estat del compte
       functional: Vòstre compte es complètament foncional.
     trouble_logging_in: Problèmas de connexion ?
+    use_security_key: Utilizar clau de seguretat
   authorize_follow:
     already_following: Seguètz ja aqueste compte
     error: O planhèm, i a agut una error al moment de cercar lo compte
@@ -690,7 +709,8 @@ oc:
     prompt: Confirmatz lo senhal per dire de contunhar
   date:
     formats:
-      default: "%d %B de %Y"
+      default: "%e %B de %Y"
+      with_month_name: "%e %B de %Y"
   datetime:
     distance_in_words:
       about_x_hours: "%{count} h"
@@ -931,6 +951,8 @@ oc:
           quadrillion: Q
           thousand: K
           trillion: T
+  otp_authentication:
+    enable: Activar
   pagination:
     newer: Mai recents
     next: Seguent
@@ -1195,24 +1217,17 @@ oc:
     mastodon-light: Mastodon (Clar)
   time:
     formats:
-      default: Lo %d %b de %Y a %Ho%M
-      month: "%b de %Y"
+      default: Lo %e %B de %Y a %Ho%M
+      month: "%B de %Y"
   two_factor_authentication:
-    code_hint: Picatz lo còdi generat per vòstra aplicacion d’autentificacion per confirmar
-    description_html: S’activatz <strong> l’autentificacion two-factor</strong>, vos caldrà vòstre mobil per vos connectar perque generarà un geton per vos daissar dintrar.
     disable: Desactivar
-    enable: Activar
     enabled: Autentificacion en dos temps activada
     enabled_success: L’autentificacion en dos temps es ben activada
     generate_recovery_codes: Generar los còdis de recuperacion
-    instructions_html: "<strong>Escanatz aqueste còdi QR amb Google Authenticator o una aplicacion similària sus vòstre mobil</strong>. A partir d’ara, aquesta aplicacion generarà un geton que vos caldrà picar per vos connectar."
     lost_recovery_codes: Los còdi de recuperacion vos permeton d’accedir a vòstre compte se perdètz vòstre mobil. S’avètz perdut vòstres còdis de recuperacion los podètz tornar generar aquí. Los ancians còdis seràn pas mai valides.
-    manual_instructions: 'Se podètz pas numerizar lo còdi QR e que vos cal picar lo còdi a la man, vaquí lo còdi en clar :'
     recovery_codes: Salvar los còdis de recuperacion
     recovery_codes_regenerated: Los còdis de recuperacion son ben estats tornats generar
     recovery_instructions_html: Se vos arriba de perdre vòstre mobil, podètz utilizar un dels còdis de recuperacion cai-jos per poder tornar accedir a vòstre compte. <strong>Gardatz los còdis en seguretat</strong>, per exemple, imprimissètz los e gardatz los amb vòstres documents importants.
-    setup: Parametrar
-    wrong_code: Lo còdi picat es invalid ! L’ora es bona sul servidor e lo mobil ?
   user_mailer:
     backup_ready:
       explanation: Avètz demandat una salvagarda complèta de vòstre compte Mastodon. Es prèsta per telecargament !
