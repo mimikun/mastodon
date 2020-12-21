@@ -833,6 +833,7 @@
   p {
     margin-bottom: 20px;
     white-space: pre-wrap;
+    unicode-bidi: plaintext;
 
     &:last-child {
       margin-bottom: 0;
@@ -842,6 +843,7 @@
   a {
     color: $secondary-text-color;
     text-decoration: none;
+    unicode-bidi: isolate;
 
     &:hover {
       text-decoration: underline;
@@ -3459,6 +3461,12 @@ a.status-card.compact:hover {
   }
 }
 
+.column-header__permission-btn {
+  display: inline;
+  font-weight: inherit;
+  text-decoration: underline;
+}
+
 .column-header__setting-arrows {
   float: right;
 
@@ -3857,7 +3865,7 @@ a.status-card.compact:hover {
 }
 
 .column-settings__row {
-  .text-btn {
+  .text-btn:not(.column-header__permission-btn) {
     margin-bottom: 15px;
   }
 }
