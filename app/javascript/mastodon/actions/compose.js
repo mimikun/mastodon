@@ -46,8 +46,6 @@ export const COMPOSE_SUGGESTION_TAGS_UPDATE = 'COMPOSE_SUGGESTION_TAGS_UPDATE';
 
 export const COMPOSE_TAG_HISTORY_UPDATE = 'COMPOSE_TAG_HISTORY_UPDATE';
 
-export const COMPOSE_TAG_TEMPLATE_UPDATE = 'COMPOSE_TAG_TEMPLATE_UPDATE';
-
 export const COMPOSE_MOUNT   = 'COMPOSE_MOUNT';
 export const COMPOSE_UNMOUNT = 'COMPOSE_UNMOUNT';
 
@@ -159,14 +157,6 @@ export function submitCompose(routerHistory) {
     if ((!status || !status.length) && media.size === 0) {
       return;
     }
-
-    const hashtag = getState().getIn(['compose', 'tagTemplate']);
-
-    hashtag.map(tag => {
-      if (tag && tag.get('active') && (tag.get('text') || '').length) {
-        status = [status, ` #${tag.get('text')}`].join('')
-      }
-    });
 
     dispatch(submitComposeRequest());
 
@@ -615,86 +605,6 @@ export function updateTagHistory(tags) {
     type: COMPOSE_TAG_HISTORY_UPDATE,
     tags,
   };
-}
-
-export function updateTextTagTemplate(text, index) {
-  return (dispatch, getState) => {
-    let active = getState().getIn(['compose', 'tagTemplate', index, 'active']) || true;
-
-    if (text.length === 0) {
-      active = false;
-    }
-
-    updateTagTemplate(text, active, index, dispatch, getState);
-  };
-}
-
-export function addTagTemplate(index) {
-  return (dispatch, getState) => {
-    const oldTemplate = getState().getIn(['compose', 'tagTemplate']);
-    const me = getState().getIn(['meta', 'me']);
-
-    if (oldTemplate.size >= 4 || oldTemplate.getIn([index, 'text']).length === 0) {
-      return;
-    }
-
-    const tags = oldTemplate.push(fromJS({text: '', active: false}));
-
-    dispatch({
-      type: COMPOSE_TAG_TEMPLATE_UPDATE,
-      tags,
-    });
-
-    tagTemplate.set(me, tags);
-  }
-}
-
-export function delTagTemplate(index) {
-  return (dispatch, getState) => {
-    if (index === 0) {
-      return;
-    }
-
-    const oldTemplate = getState().getIn(['compose', 'tagTemplate']);
-    const me = getState().getIn(['meta', 'me']);
-    const tags = oldTemplate.delete(index);
-
-    dispatch({
-      type: COMPOSE_TAG_TEMPLATE_UPDATE,
-      tags,
-    });
-
-    tagTemplate.set(me, tags);
-  }
-}
-
-export function enableTagTemplate(index) {
-  return (dispatch, getState) => {
-    const text = getState().getIn(['compose', 'tagTemplate', index, 'text']);
-    if (text.length > 0) {
-      updateTagTemplate(text, true, index, dispatch, getState);
-    }
-  };
-}
-
-export function disableTagTemplate(index) {
-  return (dispatch, getState) => {
-    const text = getState().getIn(['compose', 'tagTemplate', index, 'text']);
-    updateTagTemplate(text, false, index, dispatch, getState);
-  };
-}
-
-function updateTagTemplate(text, active, index, dispatch, getState) {
-  const oldTemplate = getState().getIn(['compose', 'tagTemplate']);
-  const me = getState().getIn(['meta', 'me']);
-  const tags = oldTemplate.setIn([index], fromJS({text: text, active: active}));
-
-  dispatch({
-    type: COMPOSE_TAG_TEMPLATE_UPDATE,
-    tags,
-  });
-
-  tagTemplate.set(me, tags);
 }
 
 export function hydrateCompose() {
