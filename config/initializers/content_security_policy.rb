@@ -11,7 +11,8 @@ base_host = Rails.configuration.x.web_domain
 assets_host   = Rails.configuration.action_controller.asset_host
 assets_host ||= host_to_url(base_host)
 
-media_host   = host_to_url(ENV['S3_ALIAS_HOST'])
+media_host   = host_to_url(ENV['S3_ALIAS_DOMAIN'])
+media_host ||= host_to_url(ENV['S3_ALIAS_HOST'])
 media_host ||= host_to_url(ENV['S3_CLOUDFRONT_HOST'])
 media_host ||= host_to_url(ENV['S3_HOSTNAME']) if ENV['S3_ENABLED'] == 'true'
 media_host ||= assets_host
