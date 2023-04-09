@@ -28,6 +28,7 @@ Rails.application.config.content_security_policy do |p|
   p.frame_src       :self, :https
   p.manifest_src    :self, assets_host
   p.form_action     :self
+  p.connect_src     :self, :data, :blob, assets_host, media_host, Rails.configuration.x.streaming_api_base_url
   p.child_src       :self, :blob, assets_host
   p.worker_src      :self, :blob, assets_host
 
