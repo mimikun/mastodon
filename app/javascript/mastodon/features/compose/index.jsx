@@ -16,7 +16,8 @@ import Column from 'mastodon/components/column';
 import { Icon }  from 'mastodon/components/icon';
 import { logOut } from 'mastodon/utils/log_out';
 
-import elephantUIPlane from '../../../images/elephant_ui_plane.svg';
+//import elephantUIPlane from '../../../images/elephant_ui_plane.svg';
+import elephantUIPlane from '../../../images/pig_and_bird_ui_plane.svg';
 import { changeComposing, mountCompose, unmountCompose } from '../../actions/compose';
 import { mascot } from '../../initial_state';
 import { isMobile } from '../../is_mobile';
