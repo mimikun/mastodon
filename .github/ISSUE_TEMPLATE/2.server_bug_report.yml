@@ -1,18 +1,19 @@
 name: Bug Report (server / API)
 description: |
-  If something is not working as expected, but is not from using the web interface.
+  Webインターフェースを使用していないにもかかわらず、何かが期待通りに動作しない場合
 labels: [bug, 'status/to triage']
+assignees: 'mimikun'
 body:
   - type: markdown
     attributes:
       value: |
-        Make sure that you are submitting a new bug that was not previously reported or already fixed.
+        以前に報告されたものでも、すでに修正されたものでもない、新しいバグを提出していることを確認してください。
 
-        Please use a concise and distinct title for the issue.
+        issueのタイトルは簡潔かつ明確にしてください。
   - type: textarea
     attributes:
-      label: Steps to reproduce the problem
-      description: What were you trying to do?
+      label: 問題の再現手順
+      description: どのように操作しましたか？
       value: |
         1.
         2.
@@ -22,43 +23,43 @@ body:
       required: true
   - type: input
     attributes:
-      label: Expected behaviour
-      description: What should have happened?
+      label: 期待される振る舞い
+      description: どのような振る舞いが期待されていましたか？
     validations:
       required: true
   - type: input
     attributes:
-      label: Actual behaviour
-      description: What happened?
+      label: 実際の振る舞い
+      description: 実際にはどのように振る舞われましたか？
     validations:
       required: true
   - type: textarea
     attributes:
-      label: Detailed description
+      label: 詳細な説明
     validations:
       required: false
   - type: input
     attributes:
       label: Mastodon instance
-      description: The address of the Mastodon instance where you experienced the issue
-      placeholder: mastodon.social
+      description: issue が発生した Mastodon インスタンスのアドレス
+      placeholder: mstdn.mimikun.jp
     validations:
       required: false
   - type: input
     attributes:
       label: Mastodon version
       description: |
-        This is displayed at the bottom of the About page, eg. `v4.1.2+nightly-20230627`
+        これは About ページの下部に表示されます。 例: `v4.1.2+nightly-20230627`
       placeholder: v4.1.2
     validations:
       required: false
   - type: textarea
     attributes:
-      label: Technical details
+      label: 技術的な詳細
       description: |
-        Any additional technical details you may have, like logs or error traces
+        ログやエラーのトレースなど、技術的な詳細があれば教えてください。
       value: |
-        If this is happening on your own Mastodon server, please fill out those:
+        ご自身のMastodonサーバーでこの現象が発生している場合は、以下にご記入ください:
         - Ruby version: (from `ruby --version`, eg. v3.1.2)
         - Node.js version: (from `node --version`, eg. v18.16.0)
     validations:

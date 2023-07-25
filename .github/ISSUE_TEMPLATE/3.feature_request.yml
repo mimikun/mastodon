@@ -1,8 +1,14 @@
-name: 機能追加
-description: 追加したい機能等
+name: 機能リクエスト
+description: 提案があります
 labels: [suggestion]
 assignees: 'mimikun'
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Please use a concise and distinct title for the issue.
+
+        Consider: Could it be implemented as a 3rd party app using the REST API instead?
   - type: textarea
     attributes:
       label: ピッチ
