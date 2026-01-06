@@ -1,0 +1,9 @@
+[env]
+#RAILS_ENV = "production"
+# TODO: uncomment production env
+#LD_PRELOAD = "/usr/lib/x86_64-linux-gnu/libjemalloc.so.2"
+
+[tools]
+node = "24.10.0"
+ruby = "3.4.7"
+
