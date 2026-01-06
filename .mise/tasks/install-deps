@@ -1,0 +1,9 @@
+#!/bin/bash
+#MISE description="Install dependencies"
+#MISE confirm = "！！！とても危険！！！"
+#MISE alias=["install-deps", "install-dependencies"]
+
+echo "bundle install"
+echo "yarn install --immutable"
+
+# vim:ft=bash
