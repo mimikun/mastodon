@@ -1,0 +1,57 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: '3'
+
+env:
+  MAIN_BRANCH: mimikun
+
+tasks:
+  default:
+    cmds:
+      - task --list
+    silent: true
+
+  switch-master:
+    desc: Branch switching to master
+    aliases:
+      - switchmaster
+      - smas
+    cmds:
+      - git switch $MAIN_BRANCH
+    silent: true
+
+  clean-fetch:
+    desc: Powerful git fetch
+    aliases:
+      - cleanfetch
+    cmds:
+      - git fetch --all --prune --tags --prune-tags
+    silent: true
+
+  update-manual:
+    desc: How to update Mastodon
+    aliases:
+      - updatemanual
+      - updman
+    cmds:
+      - echo '1. prepare mise version'
+      - echo 'mise install'
+      - echo 'mise reshim'
+      - echo '2. version check'
+      - echo 'ruby --version'
+      - echo 'node --version'
+      - echo 'yarn --version'
+      - echo 'mise ls'
+      - echo '3. install dependencies'
+      - echo 'bundle install'
+      - echo 'yarn install --immutable'
+      - echo '4. assets precompile'
+      - echo 'LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libjemalloc.so.2 RAILS_ENV=production bundle exec rails assets:precompile'
+      - echo '5. database migration'
+      - echo 'LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libjemalloc.so.2 RAILS_ENV=production bundle exec rails db:migrate'
+      - echo '6. restart all mastodon process'
+      - echo 'sudo systemctl restart mastodon-sidekiq.service'
+      - echo 'sudo systemctl restart mastodon-web.service'
+      - echo 'sudo systemctl restart mastodon-streaming*'
+    silent: true
+
