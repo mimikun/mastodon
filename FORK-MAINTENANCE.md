@@ -64,6 +64,20 @@ git rebase --onto <新ベース> <旧ベース> <対象ブランチ>
 
 → 「`v4.6.0..mimikun` の独自コミットだけ」を `v4.7.0` の上に置き直す、という意味になる。
 
+### `<旧ベース>` が分からなくなったら（必ず確認できる）
+
+第2引数は「mimikun が**今載っているベースタグ**」。これを間違える（古いタグを渡す）と、
+その間の upstream コミットまで独自コミット扱いで運ぼうとして衝突する。
+迷ったら毎回これで確認してから `--onto` に渡せば間違えない:
+
+```bash
+git fetch upstream --tags
+git describe --tags --abbrev=0 mimikun    # → 例: v4.6.1 と出れば、それが <旧ベース>
+```
+
+例: v4.6.1 → v4.7.0 に上げるなら `git rebase --onto v4.7.0 v4.6.1 mimikun`。
+（前回 v4.6.1 に上げていれば、ベースは v4.6.0 ではなく **v4.6.1** になっている点に注意）
+
 ## 検証（push 前に必ず）
 
 ```bash
@@ -108,6 +122,46 @@ git branch -D backup/mimikun-pre-<新タグ>
 7. docs: add FORK-MAINTENANCE.md（本ファイル）
 
 独自コミットを追加・変更したら、次回の rebase でそのまま新タグへ運ばれる。
+
+## 独自変更を追加・更新する
+
+`mimikun` は「ベースタグ + 独自コミット」の構成なので、独自変更は **`mimikun` の上にコミットを積むだけ**でよい。
+追加した分は `<ベースタグ>..mimikun` の範囲に入るので、次回の `git rebase --onto` で**自動的に新タグへ運ばれる**。
+特別な操作は不要。
+
+### 新しい独自変更を入れる（例: 設定ファイル追加など）
+
+```bash
+git switch mimikun
+# ファイルを編集・追加
+git add -A
+git commit -m "feat: 〇〇を追加"
+git push origin mimikun        # 積むだけなので force 不要
+```
+
+### 既存の独自変更を更新する（例: mise の yarn バージョン固定を上げる）
+
+最も簡単で安全なのは、**上書きの新コミットを積む**こと。履歴は伸びるが、フォーク運用では十分。
+
+```bash
+git switch mimikun
+# mise.toml の yarn バージョンを書き換え
+git add mise.toml
+git commit -m "chore(mise): bump yarn to x.y.z"
+git push origin mimikun
+```
+
+> 補足: 元のコミット自体を書き換えてきれいにしたい場合は `git rebase -i <ベースタグ>` で
+> 該当コミットを `edit` / `squash` できる（ローカル端末の対話シェルで実行）。
+> ただし履歴の書き換え + `git push --force-with-lease` が必要になり、衝突解決の手間も増えるため、
+> 通常は上の「新コミットを積む」方式で十分。
+
+### 注意点
+
+- 独自変更は **upstream が触らないファイル**（`CLAUDE.md` / `mise.toml` / `Taskfile.yml` / 本ファイル等）に
+  留めるほど、将来の rebase で衝突しない。
+- upstream のコードファイル（`app/`, `config/`, `lib/` 等）を独自に改変すると、
+  リリース追従のたびにそのファイルで衝突しやすくなる。改変する場合は最小限・局所的にする。
 
 ## デプロイについて（スコープ外メモ）
 
