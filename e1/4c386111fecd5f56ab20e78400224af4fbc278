@@ -1,0 +1,19 @@
+FORK-MAINTENANCE.md
+  s_1c45c0a817502a::t_a27271696f86ed 1-116
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.9",
+  "base_commit_sha": "e14c386111fecd5f56ab20e78400224af4fbc278",
+  "prompts": {},
+  "sessions": {
+    "s_1c45c0a817502a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e13c429c-d6fb-41ec-aee5-b0cefb760876",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Yuto Tanaka <git@mimikun.dev>"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+mise.toml
+  s_5bf461d7928ac9::t_ec61214dfd4195 9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.9",
+  "base_commit_sha": "1d17a8fbb0fd17d685f63dd037a3aa02b0ab6b26",
+  "prompts": {},
+  "sessions": {
+    "s_5bf461d7928ac9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "8d8ba017-664e-461a-965e-1416f67dde79",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Yuto Tanaka <git@mimikun.dev>"
+    }
+  }
+}
