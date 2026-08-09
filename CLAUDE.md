@@ -7,15 +7,23 @@ This is a personal fork of [Mastodon](https://github.com/mastodon/mastodon) for 
 ### Fork Information
 
 - **Upstream Repository**: https://github.com/mastodon/mastodon
-- **Upstream Branch**: `main`
-- **Fork Base**: `stable-4.5` branch
+- **Fork Base**: an upstream **release tag** (currently `v4.6.2`), not a branch
 - **Purpose**: Personal server deployment with custom modifications
 
 ### Key Points
 
 - This fork contains custom modifications specific to personal server requirements
-- Regular synchronization with upstream is planned
 - Changes should be carefully documented for easier upstream merging if needed
+- **Never merge upstream into `mimikun`.** Keep the branch as "one upstream
+  release tag + the custom commits, and nothing else". Following a new release
+  is then a single `git rebase --onto`.
+- **The procedure lives in `FORK-MAINTENANCE.md`. Read that before updating.**
+  It covers the remotes, the rebase, the meaning of each `--onto` argument, and
+  the verification steps.
+
+Tracking an upstream **branch** was tried and abandoned on 2026-06-21: version
+bumps and Crowdin translations produced conflicts on every sync. This document
+described that abandoned setup until 2026-08-09.
 
 ## Technology Stack
 
