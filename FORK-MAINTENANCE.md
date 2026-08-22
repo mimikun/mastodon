@@ -109,17 +109,15 @@ git branch backup/mimikun-pre-<新タグ> mimikun
 git branch -D backup/mimikun-pre-<新タグ>
 ```
 
-## 現在の独自コミット（2026-06-21 時点 / v4.6.0 ベース）
+## 現在の独自コミットを確認する
 
-`git log --oneline v4.6.0..mimikun` で確認できる。内訳:
+**ここに一覧を書かない。** 手で維持すると git が持っている情報の劣化コピーになり、
+コミットを積むたびに古くなる（実際に v4.6.0 時点の 7 件のまま放置されていた）。
 
-1. 🦻< start my fork（空マーカーコミット）
-2. docs: add CLAUDE.md
-3. ISSUE_TEMPLATE 削除
-4. feat: add mise.toml
-5. feat(mise): add yarn
-6. feat: add mimikun's taskfile
-7. docs: add FORK-MAINTENANCE.md（本ファイル）
+```bash
+git log --oneline (git describe --tags --abbrev=0 mimikun)..mimikun   # fish
+git log --oneline $(git describe --tags --abbrev=0 mimikun)..mimikun  # bash/zsh
+```
 
 独自コミットを追加・変更したら、次回の rebase でそのまま新タグへ運ばれる。
 
