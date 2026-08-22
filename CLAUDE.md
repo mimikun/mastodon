@@ -7,7 +7,9 @@ This is a personal fork of [Mastodon](https://github.com/mastodon/mastodon) for 
 ### Fork Information
 
 - **Upstream Repository**: https://github.com/mastodon/mastodon
-- **Fork Base**: an upstream **release tag** (currently `v4.7.0`), not a branch
+- **Fork Base**: an upstream **release tag**, not a branch.
+  Never write the tag here — read it with
+  `git describe --tags --abbrev=0 mimikun`.
 - **Purpose**: Personal server deployment with custom modifications
 
 ### Key Points
@@ -27,25 +29,26 @@ described that abandoned setup until 2026-08-09.
 
 ## Technology Stack
 
+> **Never write version numbers in this file.** They change with every upstream
+> release and a written copy goes stale silently. Each row below names the file
+> that holds the real value — read that file instead.
+
 ### Backend
 
 - **Ruby on Rails**: REST API and web interface
-- **Ruby Version**: 3.2+ (see `.ruby-version`)
-- **PostgreSQL**: 14+ (main database)
-- **Redis**: 7.0+ (caching and background jobs)
+- **Ruby**: `.ruby-version` (the pin used locally is `mise.toml`)
+- **PostgreSQL**: `docker-compose.yml` (`postgres` service image)
+- **Redis**: `docker-compose.yml` (`redis` service image)
 - **Sidekiq**: Background job processing
 
 ### Frontend
 
-- **React**: 18.2.0 (UI library)
-- **Redux**: State management (@reduxjs/toolkit)
-- **TypeScript**: 5.9.0 (type safety)
-- **Vite**: 7.1.1 (build tool and dev server)
-- **Node.js**: 20+ (see `.nvmrc`)
+- **React**, **Redux** (@reduxjs/toolkit), **TypeScript**, **Vite**: `package.json`
+- **Node.js**: `.nvmrc` (the pin used locally is `mise.toml`)
 
 ### Package Managers
 
-- **Yarn**: 4.10.3 (JavaScript packages) - **DO NOT use npm or pnpm**
+- **Yarn**: `packageManager` in `package.json` - **DO NOT use npm or pnpm**
 - **Bundler**: Ruby gem management
 
 ### Code Quality Tools
@@ -73,11 +76,11 @@ described that abandoned setup until 2026-08-09.
 
 ### Prerequisites
 
-1. **Ruby**: 3.2+ (use rbenv, rvm, or asdf)
-2. **Node.js**: 20+ (use nvm, fnm, or asdf)
-3. **PostgreSQL**: 14+
-4. **Redis**: 7.0+
-5. **ImageMagick/libvips**: Image processing
+This fork uses **mise**, so `mise install` covers Ruby, Node.js and Yarn at the
+versions pinned in `mise.toml`. The rest:
+
+1. **PostgreSQL** / **Redis**: versions are in `docker-compose.yml`
+2. **ImageMagick/libvips**: Image processing
 
 ### Quick Start (Docker)
 
@@ -205,7 +208,7 @@ bundle exec rails dev:populate_sample_data
 ### Ruby Guidelines
 
 - Follow [RuboCop](https://rubocop.org/) guidelines (see `.rubocop.yml`)
-- Use Ruby 3.2+ syntax features
+- Use modern Ruby syntax features (the version is in `.ruby-version`)
 - Prefer keyword arguments for methods with multiple parameters
 - Use strong parameters for all controller actions
 - Write RSpec tests for all business logic
