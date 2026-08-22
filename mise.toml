@@ -4,7 +4,7 @@
 #LD_PRELOAD = "/usr/lib/x86_64-linux-gnu/libjemalloc.so.2"
 
 [tools]
-node = "24.17.0"
-ruby = "4.0.5"
-yarn = "4.16.0"
+node = "24.19"
+ruby = "4.0.6"
+yarn = "4.18.0"
 
