@@ -7,7 +7,7 @@ This is a personal fork of [Mastodon](https://github.com/mastodon/mastodon) for 
 ### Fork Information
 
 - **Upstream Repository**: https://github.com/mastodon/mastodon
-- **Fork Base**: an upstream **release tag** (currently `v4.6.2`), not a branch
+- **Fork Base**: an upstream **release tag** (currently `v4.7.0`), not a branch
 - **Purpose**: Personal server deployment with custom modifications
 
 ### Key Points
