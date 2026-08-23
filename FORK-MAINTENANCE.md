@@ -161,8 +161,60 @@ git push origin mimikun
 - upstream のコードファイル（`app/`, `config/`, `lib/` 等）を独自に改変すると、
   リリース追従のたびにそのファイルで衝突しやすくなる。改変する場合は最小限・局所的にする。
 
-## デプロイについて（スコープ外メモ）
+## デプロイ（実サーバの更新）
 
-本手順は**コードの追従のみ**。実サーバ更新時は別途、リリースごとの
-[Mastodon リリースノート](https://github.com/mastodon/mastodon/releases) を確認し、
-`bundle install` / `yarn install` / `rails db:migrate` / アセットプリコンパイル / 各種再起動などを行うこと。
+本ファイルの主題は**コードの追従**だが、サーバ側で必ず踏む罠が3つあるのでここに置く。
+リリースごとの [Mastodon リリースノート](https://github.com/mastodon/mastodon/releases)
+の確認、`bundle install` / `yarn install` / `rails db:migrate` /
+アセットプリコンパイル / 各種再起動が要るのは従来どおり。
+
+### 1. サーバ側は `git pull` ではなく `git reset --hard`
+
+**`mimikun` ブランチは毎リリース `git rebase --onto` で載せ替えられ、SHA が総取り替えになる。**
+サーバの作業ツリーは古い SHA を持ったままなので、`git pull` は
+**「独自コミット × 2」を突き合わせるマージ**になる。
+
+```bash
+git status --short                    # 空であることを先に確認
+git fetch origin
+git reset --hard origin/mimikun
+```
+
+実例（2026-08-23、4.6.4 → 4.7.0）: サーバの `git status -sb` が
+`## mimikun...origin/mimikun [ahead 118, behind 498]` を表示していた。
+`ahead 118` は**サーバが独自コミットを持っている**のではなく、
+**rebase 前の SHA を指しているだけ**。ここで `pull` すると大量に衝突するか、
+通っても古いコードが混ざったマージコミットができる。
+
+### 2. `git clean` を打たない
+
+`public/system/`（アップロード済みメディア）と `.env.production` は
+**gitignore 対象**なので、`git clean -fd` は**それらを削除する**。
+`git reset --hard` は追跡対象しか触らないので安全。
+
+### 3. systemctl の glob は `start` では効かない
+
+```bash
+# 停止: glob が効く（起動中＝ロード済みユニットに展開されるため）
+sudo systemctl stop mastodon-sidekiq.service mastodon-web.service 'mastodon-streaming*'
+
+# 起動: glob は何にも展開されない。明示名で書く
+sudo systemctl start mastodon-web.service mastodon-streaming.service mastodon-sidekiq.service
+```
+
+停止中のユニットは systemd から見えなくなるため、`start` にパターンを渡すと
+`Warning: systemctl start called with a glob pattern.` が出て**何も起動しない**。
+
+`mastodon-streaming.service` は `mastodon-streaming@<port>.service` を引っ張る
+ラッパーで、自身は `active (exited)` になる。**これは正常**（実体は `@<port>` の
+`running` のほう）。
+
+### 補足: マイグレーションを分割するかどうか
+
+アプリ層（web / sidekiq / streaming）を**全部止めてから**流すなら、
+`SKIP_POST_DEPLOYMENT_MIGRATIONS` による分割は**不要**。
+分割はダウンタイムを短くするための手法であって、総所要時間は変わらない。
+止めずに流す場合のみ、本体 → 再起動 → post-deployment の順に割る。
+
+なお PostgreSQL / Redis / nginx は別ユニットなので、上記の `stop` では止まらない。
+`db:migrate` はそのまま通る。
